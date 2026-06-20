@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narcissist Behaviour Checklist — Psychefolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Space+Grotesk:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --yellow: #fff700;
+    --black: #0a0a0a;
+    --off-black: #111111;
+    --card: #151515;
+    --border: #242424;
+    --white: #ffffff;
+    --muted: #555555;
+    --yellow-dim: rgba(255,247,0,0.08);
+    --yellow-border: rgba(255,247,0,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 70px 24px 56px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  /* Signature element: pulsing brain-scan ring */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,247,0,0.07);
+    box-shadow: 0 0 0 40px rgba(255,247,0,0.03), 0 0 0 80px rgba(255,247,0,0.015);
+    animation: pulse 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    50% { transform: translateX(-50%) scale(1.04); opacity: 0.6; }
+  }
+
+  .brand-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .brand-tag::before, .brand-tag::after {
+    content: '';
+    display: block;
+    width: 24px; height: 1px;
+    background: var(--yellow);
+    opacity: 0.4;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.4rem, 7vw, 4.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--yellow);
+  }
+
+  .hero-sub {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #888;
+    max-width: 420px;
+    margin: 18px auto 32px;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+  }
+
+  .score-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    background: var(--yellow-dim);
+    border: 1px solid var(--yellow-border);
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 0.08em;
+    position: relative;
+  }
+
+  .score-pill strong {
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--yellow);
+    line-height: 1;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* ── PAID BADGE ── */
+  .paid-strip {
+    background: var(--yellow);
+    color: var(--black);
+    text-align: center;
+    padding: 10px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  /* ── BROWSER NOTICE: visible even in static preview viewers (e.g. iOS Quick Look) ── */
+  .browser-notice {
+    background: var(--off-black);
+    border-bottom: 1px solid var(--yellow-border);
+    color: #ddd;
+    text-align: center;
+    padding: 14px 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12.5px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .browser-notice strong {
+    color: var(--yellow);
+    font-weight: 600;
+  }
+
+  .browser-notice .icon {
+    font-size: 14px;
+    margin-right: 4px;
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ── CATEGORY ── */
+  .category { margin-top: 44px; }
+
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cat-glyph {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--yellow);
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .cat-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+
+  .cat-count {
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  /* ── ITEMS ── */
+  .item {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 13px 14px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    background: var(--card);
+    border: 1px solid var(--border);
+    user-select: none;
+  }
+
+  .item:hover { border-color: rgba(255,247,0,0.2); background: #1a1a1a; }
+
+  .item.checked {
+    background: var(--yellow-dim);
+    border-color: var(--yellow-border);
+  }
+
+  .checkbox {
+    width: 20px; height: 20px;
+    border-radius: 3px;
+    border: 1.5px solid #333;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    background: transparent;
+  }
+
+  .item.checked .checkbox {
+    background: var(--yellow);
+    border-color: var(--yellow);
+  }
+
+  .checkmark { display: none; width: 11px; height: 11px; }
+  .item.checked .checkmark { display: block; }
+
+  .item-text {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #aaa;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+
+  .item.checked .item-text { color: #e8e8e8; font-weight: 400; }
+
+  /* ── RESULT ── */
+  .result-banner {
+    margin-top: 48px;
+    border-radius: 4px;
+    padding: 32px 28px;
+    text-align: center;
+    display: none;
+    animation: fadeUp 0.5s ease;
+    border: 1px solid var(--border);
+  }
+
+  .result-banner.show { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-banner.low     { border-color: #2a5c3a; background: #0d1f13; }
+  .result-banner.medium  { border-color: #6b5a00; background: #1a1500; }
+  .result-banner.high    { border-color: #7a3a00; background: #1a0d00; }
+  .result-banner.extreme { border-color: #7a0000; background: #1a0000; }
+
+  .result-score-line {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .result-banner.low     .result-score-line { color: #4caf70; }
+  .result-banner.medium  .result-score-line { color: var(--yellow); }
+  .result-banner.high    .result-score-line { color: #ff8c42; }
+  .result-banner.extreme .result-score-line { color: #ff4444; }
+
+  .result-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    line-height: 1.1;
+    color: var(--white);
+  }
+
+  .result-desc {
+    font-size: 13.5px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: #999;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  /* ── RESET ── */
+  .reset-btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    display: block;
+    margin: 28px auto 0;
+    background: transparent;
+    border: 1px solid #333;
+    color: #555;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .reset-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  /* ── FOOTER ── */
+  .footer {
+    max-width: 680px;
+    margin: 56px auto 0;
+    padding: 28px 20px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--yellow);
+  }
+
+  .footer-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #444;
+  }
+
+  .footer-disclaimer {
+    font-size: 11px;
+    font-weight: 300;
+    color: #3a3a3a;
+    line-height: 1.7;
+    max-width: 400px;
+    margin-top: 6px;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 50px 18px 40px; }
+    .hero h1 { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="paid-strip">PAID RESOURCE · ₹500 · PSYCHEFOLIO</div>
+
+<div class="browser-notice">
+  <span class="icon">⚠️</span>If you opened this from <strong>WhatsApp or Messages</strong>, tap the <strong>Share icon</strong> (top right) and select <strong>"Open in Safari"</strong> or <strong>"Open in Browser"</strong> — this checklist only works inside a real browser, not the preview screen.
+</div>
+
+<div class="hero">
+  <div class="brand-tag">Psychefolio · Narcissism Awareness</div>
+  <h1>Is This Person<br>a <em>Narcissist?</em></h1>
+  <p class="hero-sub">Tick every behaviour you've experienced. Your result appears in real time. This is an awareness tool — not a clinical diagnosis.</p>
+  <div class="score-pill">
+    <strong><span id="score-num">0</span></strong> of 40 behaviours identified
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- CAT 1 -->
+  <div class="category">
+    <div class="cat-header">
+      <span class="cat-glyph">01 ——</span>
+      <span class="cat-title">Grandiosity &amp; Entitlement</span>
+      <span class="cat-count" id="count-1">0 / 8</span>
+    </div>
+    <div class="items" data-cat="1">
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Acts as if rules don't apply to them — skips queues, ignores policies, expects exceptions</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Frequently boasts about achievements, status, wealth, or connections</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Expects constant praise and admiration without reciprocating</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Believes they are "special" and should only associate with equally special people</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Exaggerates their role in events or takes credit for other people's work</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Name-drops, status-drops, or constantly references their "important" connections</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Gets visibly irritated when they are not the centre of attention</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Speaks about their future in grandiose terms — power, fame, wealth — with no self-awareness</div></div>
+    </div>
+  </div>
+
+  <!-- CAT 2 -->
+  <div class="category">
+    <div class="cat-header">
+      <span class="cat-glyph">02 ——</span>
+      <span class="cat-title">Lack of Empathy</span>
+      <span class="cat-count" id="count-2">0 / 7</span>
+    </div>
+    <div class="items" data-cat="2">
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Shows little or no genuine interest in your feelings, struggles, or inner life</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Turns your emotional conversations back around to themselves within minutes</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Dismisses your pain with "you're too sensitive" or "you're overreacting"</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Uses your vulnerabilities or personal confessions against you later</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Appears cold or unmoved when others are visibly upset or in crisis</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Only shows warmth or care when there is something to gain from it</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Cannot or will not acknowledge how their behaviour affects other people</div></div>
+    </div>
+  </div>
+
+  <!-- CAT 3 -->
+  <div class="category">
+    <div class="cat-header">
+      <span class="cat-glyph">03 ——</span>
+      <span class="cat-title">Manipulation &amp; Control</span>
+      <span class="cat-count" id="count-3">0 / 8</span>
+    </div>
+    <div class="items" data-cat="3">
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Makes you question your own memory or perception of events (gaslighting)</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Uses guilt, silent treatment, or withdrawal of affection to punish or control you</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Triangulates — uses a third person to make you feel jealous, insecure, or in competition</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Love-bombed at the start — overwhelming affection and flattery — then withdrew it suddenly</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Shifts the goalposts — what was acceptable yesterday is suddenly wrong today</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Controls your access to people, money, or information to keep you dependent</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Plays the victim when confronted, turning the situation so you end up apologising</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Uses charm strategically — entirely different person in public vs in private</div></div>
+    </div>
+  </div>
+
+  <!-- CAT 4 -->
+  <div class="category">
+    <div class="cat-header">
+      <span class="cat-glyph">04 ——</span>
+      <span class="cat-title">Rage, Criticism &amp; Reactions</span>
+      <span class="cat-count" id="count-4">0 / 7</span>
+    </div>
+    <div class="items" data-cat="4">
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Reacts to mild criticism or perceived slights with extreme anger or contempt (narcissistic rage)</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Cannot accept being wrong — always has a reason, excuse, or someone else to blame</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Holds grudges and pursues revenge — even over very minor perceived wrongs</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Criticises you freely but cannot handle any criticism directed back at them</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Stonewalls or gives silent treatment as punishment rather than to process emotions</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Smears your reputation to others when you threaten their image or try to leave</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Their mood is unpredictable — you walk on eggshells, never knowing what will trigger them</div></div>
+    </div>
+  </div>
+
+  <!-- CAT 5 -->
+  <div class="category">
+    <div class="cat-header">
+      <span class="cat-glyph">05 ——</span>
+      <span class="cat-title">How They Make You Feel</span>
+      <span class="cat-count" id="count-5">0 / 5</span>
+    </div>
+    <div class="items" data-cat="5">
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">You feel confused, exhausted, or "crazy" after interactions with them</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">You find yourself constantly apologising even when you've done nothing wrong</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Your self-esteem has noticeably declined since this person entered your life</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">You feel isolated from friends or family — either by their actions or your own shame</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">You feel like you can never do enough, be enough, or win — no matter what you try</div></div>
+    </div>
+  </div>
+
+  <!-- CAT 6 -->
+  <div class="category">
+    <div class="cat-header">
+      <span class="cat-glyph">06 ——</span>
+      <span class="cat-title">Relationships &amp; Social Patterns</span>
+      <span class="cat-count" id="count-6">0 / 5</span>
+    </div>
+    <div class="items" data-cat="6">
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Has a trail of burned bridges — ex-friends and partners who "turned on them for no reason"</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">People are either all-good (idealised) or all-bad (devalued) — no nuance in between</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Surrounds themselves with people who agree with them or reflect their image back (narcissistic supply)</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Uses people for status, connections, or attention and discards them when no longer useful</div></div>
+      <div class="item"><div class="checkbox"><svg class="checkmark" viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,9 10,2" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="item-text">Envies others' success deeply, while simultaneously believing others are envious of them</div></div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" class="result-banner">
+    <div class="result-score-line" id="result-label"></div>
+    <div class="result-title" id="result-title"></div>
+    <p class="result-desc" id="result-desc"></p>
+  </div>
+
+  <button class="reset-btn" id="reset-btn" type="button">↺ &nbsp; CLEAR ALL</button>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">Psychefolio</div>
+  <div class="footer-name">by Sohaib Natnoo</div>
+  <p class="footer-disclaimer">
+    This checklist is an awareness tool — not a clinical diagnosis.<br>
+    Only a qualified mental health professional can diagnose NPD.<br>
+    © Psychefolio · Paid Resource ₹500 · Do not distribute or alter
+  </p>
+</div>
+
+<script>
+  let total = 0;
+  const CATS = {1:8, 2:7, 3:8, 4:7, 5:5, 6:5};
+  const CAT_NAMES = {
+    1: 'Grandiosity & Entitlement',
+    2: 'Lack of Empathy',
+    3: 'Manipulation & Control',
+    4: 'Rage, Criticism & Reactions',
+    5: 'How They Make You Feel',
+    6: 'Relationships & Social Patterns'
+  };
+
+  let currentResult = { label: '', title: '', desc: '' };
+
+  function toggleItem(el) {
+    el.classList.toggle('checked');
+    total = document.querySelectorAll('.item.checked').length;
+    document.getElementById('score-num').textContent = total;
+    updateCatCounts();
+    updateResult();
+  }
+
+  function updateCatCounts() {
+    for (let c = 1; c <= 6; c++) {
+      const cont = document.querySelector(`.items[data-cat="${c}"]`);
+      if (!cont) continue;
+      const checked = cont.querySelectorAll('.item.checked').length;
+      const el = document.getElementById(`count-${c}`);
+      if (el) el.textContent = `${checked} / ${CATS[c]}`;
+    }
+  }
+
+  function updateResult() {
+    const r = document.getElementById('result');
+    const label = document.getElementById('result-label');
+    const title = document.getElementById('result-title');
+    const desc = document.getElementById('result-desc');
+
+    if (total < 5) {
+      r.className = 'result-banner';
+      currentResult = { label: '', title: '', desc: '' };
+      return;
+    }
+
+    r.classList.add('show');
+
+    if (total <= 8) {
+      r.className = 'result-banner low show';
+      currentResult.label = `PATTERN LEVEL · ${total} / 40`;
+      currentResult.title = 'A Few Concerning Traits';
+      currentResult.desc = "You've noticed some patterns that feel uncomfortable. Occasional traits alone don't define a narcissist — context and consistency matter. Keep paying attention to how this person makes you feel over time.";
+    } else if (total <= 18) {
+      r.className = 'result-banner medium show';
+      currentResult.label = `PATTERN LEVEL · ${total} / 40`;
+      currentResult.title = 'A Pattern Worth Taking Seriously';
+      currentResult.desc = "You're experiencing a notable cluster of narcissistic behaviours. This level of pattern is emotionally draining and can cause real harm over time. Trust what you're feeling — your instincts are speaking clearly.";
+    } else if (total <= 28) {
+      r.className = 'result-banner high show';
+      currentResult.label = `PATTERN LEVEL · ${total} / 40`;
+      currentResult.title = 'Strong Indicators of Narcissistic Behaviour';
+      currentResult.desc = "The pattern you're describing is significant. This many behaviours — across multiple categories — causes serious psychological harm. Consider speaking to a therapist who understands narcissistic abuse. You are not imagining this.";
+    } else {
+      r.className = 'result-banner extreme show';
+      currentResult.label = `PATTERN LEVEL · ${total} / 40`;
+      currentResult.title = 'This Is Narcissistic Abuse';
+      currentResult.desc = "What you're experiencing matches the profile of narcissistic abuse at a severe level. This is not your fault. Your confusion and exhaustion are valid responses to an abnormal situation. Please reach out for support — a therapist, a trusted person, or a crisis line. You deserve safety and healing.";
+    }
+
+    label.textContent = currentResult.label;
+    title.textContent = currentResult.title;
+    desc.textContent = currentResult.desc;
+  }
+
+  function resetAll() {
+    document.querySelectorAll('.item.checked').forEach(el => el.classList.remove('checked'));
+    total = 0;
+    document.getElementById('score-num').textContent = '0';
+    updateCatCounts();
+    document.getElementById('result').className = 'result-banner';
+    currentResult = { label: '', title: '', desc: '' };
+  }
+
+  // ══════════════════════════════════════════════
+  // CROSS-DEVICE TAP HANDLING
+  // Uses event delegation with plain "click" events.
+  // Every modern browser — iOS Safari, Android Chrome,
+  // desktop — fires a "click" event for both touch taps
+  // and mouse clicks. This is the most reliable approach
+  // and avoids all the edge cases of manual touch tracking.
+  // ══════════════════════════════════════════════
+  document.addEventListener('click', function (e) {
+    const item = e.target.closest('.item');
+    if (item) {
+      toggleItem(item);
+      return;
+    }
+    const resetBtn = e.target.closest('#reset-btn');
+    if (resetBtn) {
+      resetAll();
+    }
+  });
+</script>
+</body>
+</html>
