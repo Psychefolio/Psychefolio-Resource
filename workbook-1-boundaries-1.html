@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boundaries After a Narcissist — Psychefolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Space+Grotesk:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --y:#fff700;--b:#0a0a0a;--card:#141414;--border:#222;
+  --w:#fff;--muted:#666;--ydim:rgba(255,247,0,0.07);--yborder:rgba(255,247,0,0.22);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--b);color:var(--w);min-height:100vh;overflow-x:hidden}
+
+/* PAID STRIP */
+.strip{background:var(--y);color:#000;text-align:center;padding:9px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;font-weight:700}
+
+/* HERO */
+.hero{padding:64px 24px 52px;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:120px;height:2px;background:var(--y)}
+.wb-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--y);margin-bottom:22px;opacity:.8}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,6vw,3.8rem);line-height:1.08;margin-bottom:8px}
+.hero h1 em{font-style:italic;color:var(--y)}
+.hero-desc{font-size:13.5px;font-weight:300;color:#777;max-width:440px;margin:16px auto 0;line-height:1.75}
+
+/* PROGRESS */
+.progress-bar{max-width:680px;margin:32px auto 0;padding:0 20px}
+.prog-track{height:3px;background:#1e1e1e;border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:var(--y);border-radius:2px;transition:width .4s ease;width:0%}
+.prog-label{display:flex;justify-content:space-between;margin-top:8px;font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.08em}
+
+/* CONTAINER */
+.container{max-width:680px;margin:0 auto;padding:0 20px 80px}
+
+/* MODULE */
+.module{margin-top:48px}
+.mod-header{margin-bottom:20px}
+.mod-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--y);opacity:.7;margin-bottom:8px}
+.mod-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;line-height:1.15}
+.mod-intro{font-size:13.5px;font-weight:300;color:#888;line-height:1.75;margin-top:10px;padding-top:14px;border-top:1px solid var(--border)}
+
+/* EXERCISE CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:24px;margin-bottom:12px}
+.card-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;font-weight:300;color:#ddd;margin-bottom:14px;line-height:1.5}
+.card-hint{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:12px}
+textarea{width:100%;background:#0d0d0d;border:1px solid #222;border-radius:3px;color:#ccc;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:300;line-height:1.7;padding:14px;resize:vertical;min-height:100px;outline:none;transition:border-color .2s}
+textarea:focus{border-color:var(--yborder)}
+textarea::placeholder{color:#333}
+
+/* SCALE */
+.scale-row{display:flex;align-items:center;gap:0;margin:10px 0 6px;width:100%}
+.scale-btn{flex:1;padding:10px 4px;background:#0d0d0d;border:1px solid #222;color:#555;font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;text-align:center}
+.scale-btn:first-child{border-radius:3px 0 0 3px}
+.scale-btn:last-child{border-radius:0 3px 3px 0}
+.scale-btn:not(:first-child){border-left:none}
+.scale-btn:hover{border-color:var(--yborder);color:var(--y)}
+.scale-btn.active{background:var(--ydim);border-color:var(--yborder);color:var(--y)}
+.scale-labels{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:9px;color:#444;letter-spacing:.05em;margin-top:4px}
+
+/* CHECKLIST EXERCISE */
+.ex-checks .ex-item{display:flex;align-items:flex-start;gap:12px;padding:11px 14px;background:#0d0d0d;border:1px solid #1a1a1a;border-radius:3px;margin-bottom:5px;cursor:pointer;transition:all .15s;user-select:none}
+.ex-checks .ex-item:hover{border-color:#2a2a2a}
+.ex-checks .ex-item.done{background:var(--ydim);border-color:var(--yborder)}
+.ex-box{width:18px;height:18px;border:1.5px solid #333;border-radius:3px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ex-item.done .ex-box{background:var(--y);border-color:var(--y)}
+.ex-tick{display:none;width:10px;height:10px}
+.ex-item.done .ex-tick{display:block}
+.ex-text{font-size:13px;font-weight:300;color:#999;line-height:1.5}
+.ex-item.done .ex-text{color:#ddd}
+
+/* SCRIPT BOX */
+.script-box{background:#0a0a0a;border-left:2px solid var(--y);padding:16px 18px;border-radius:0 3px 3px 0;margin:12px 0;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:300;color:#aaa;line-height:1.7;font-style:italic}
+
+/* REFLECTION */
+.reflection{background:var(--ydim);border:1px solid var(--yborder);border-radius:4px;padding:22px;margin-top:12px}
+.reflection-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--y);margin-bottom:12px}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:48px 0 0}
+
+/* COMPLETE BANNER */
+.complete{display:none;margin-top:48px;background:var(--ydim);border:1px solid var(--yborder);border-radius:4px;padding:36px 28px;text-align:center;animation:fadeUp .5s ease}
+.complete.show{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.complete-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--y);margin-bottom:10px}
+.complete-sub{font-size:13.5px;font-weight:300;color:#888;line-height:1.7}
+
+/* FOOTER */
+.footer{text-align:center;padding:32px 20px 40px;border-top:1px solid var(--border);margin-top:60px}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--y);letter-spacing:.06em}
+.footer-name{font-family:'Space Mono',monospace;font-size:10px;color:#333;letter-spacing:.12em;margin-top:4px}
+.footer-copy{font-size:11px;color:#2a2a2a;margin-top:10px;line-height:1.7}
+
+@media(max-width:480px){.hero{padding:48px 18px 40px}.scale-btn{font-size:9px;padding:8px 2px}}
+
+/* EXPORT BUTTON */
+.export-wrap{text-align:center;margin-top:28px}
+.btn-export{background:var(--y);color:#000;border:none;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px 32px;cursor:pointer;border-radius:3px;transition:opacity .15s;opacity:0.35;pointer-events:none}
+.btn-export.ready{opacity:1;pointer-events:auto}
+.btn-export.ready:hover{opacity:.82}
+.btn-export.ready:active{opacity:.6}
+.export-hint{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;color:#333;margin-top:10px;text-transform:uppercase}
+
+/* PRINT HEADER */
+.print-header{display:none;padding:24px 24px 16px;border-bottom:2px solid var(--y);margin-bottom:8px}
+.ph-brand{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--y);text-transform:uppercase;margin-bottom:6px}
+.ph-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600}
+.ph-meta{font-family:'Space Mono',monospace;font-size:9px;color:#666;margin-top:6px;line-height:1.7}
+
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#0a0a0a!important}
+  .strip{display:none!important}
+  .progress-bar{display:none!important}
+  .export-wrap{display:none!important}
+  .print-header{display:block!important}
+  .complete{display:block!important}
+  textarea{border-color:#2a2a2a!important;color:#ccc!important}
+  .scale-btn.active{background:var(--ydim)!important;border-color:var(--yborder)!important;color:var(--y)!important}
+  .ex-item.done{background:var(--ydim)!important;border-color:var(--yborder)!important}
+}
+</style>
+</head>
+<body>
+
+
+<!-- Print header -->
+<div class="print-header" id="printHeader">
+  <div class="ph-brand">Psychefolio by Sohaib Natnoo — Workbook 01</div>
+  <div class="ph-title">Boundaries After a Narcissist</div>
+  <div class="ph-meta" id="printMeta"></div>
+</div>
+
+<div class="strip">PAID RESOURCE · ₹299 · PSYCHEFOLIO</div>
+
+<div class="hero">
+  <div class="wb-label">WORKBOOK 01 · PSYCHEFOLIO</div>
+  <h1>Boundaries After<br>a <em>Narcissist</em></h1>
+  <p class="hero-desc">Your boundaries weren't respected. Now you rebuild them — on your own terms. This workbook walks you through understanding, naming, and holding boundaries the narcissist dismantled.</p>
+</div>
+
+<div class="progress-bar">
+  <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+  <div class="prog-label"><span>Progress</span><span id="prog-text">0 of 5 modules</span></div>
+</div>
+
+<div class="container">
+
+<!-- MODULE 1 -->
+<div class="module" id="mod1">
+  <div class="mod-header">
+    <div class="mod-eyebrow">MODULE 01</div>
+    <div class="mod-title">Understanding What Was Taken</div>
+    <p class="mod-intro">Before rebuilding, you need to see clearly what was eroded. Narcissists don't announce they're crossing a boundary — they reframe it until you can't see the line anymore.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-q">Which of these did the narcissist make you feel was wrong or unreasonable to want?</div>
+    <div class="card-hint">TICK ALL THAT APPLY</div>
+    <div class="ex-checks" id="taken-checks">
+      <div class="ex-item" onclick="tickEx(this,'taken')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Privacy — reading my messages, emails, or diary</div></div>
+      <div class="ex-item" onclick="tickEx(this,'taken')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Time alone or time with other people</div></div>
+      <div class="ex-item" onclick="tickEx(this,'taken')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">The right to say no without being punished</div></div>
+      <div class="ex-item" onclick="tickEx(this,'taken')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Control over my own money or finances</div></div>
+      <div class="ex-item" onclick="tickEx(this,'taken')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">The right to have feelings without being ridiculed</div></div>
+      <div class="ex-item" onclick="tickEx(this,'taken')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">My opinions, preferences, or beliefs</div></div>
+      <div class="ex-item" onclick="tickEx(this,'taken')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Physical space and bodily autonomy</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q">What boundary violation hurt you most? Describe what happened and how it was justified to you at the time.</div>
+    <textarea placeholder="Write freely. No one else will read this..." data-mod="1"></textarea>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MODULE 2 -->
+<div class="module" id="mod2">
+  <div class="mod-header">
+    <div class="mod-eyebrow">MODULE 02</div>
+    <div class="mod-title">Why You Stopped Holding Them</div>
+    <p class="mod-intro">With a narcissist, holding a boundary comes with a cost — rage, punishment, guilt. Your nervous system learned that boundaries aren't safe. That was their doing, not your weakness.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-q">When you tried to hold a boundary, what typically happened?</div>
+    <div class="card-hint">SELECT THE CLOSEST DESCRIPTION</div>
+    <div class="ex-checks">
+      <div class="ex-item" onclick="singleSelect(this,'resp')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">They became angry or raged until I gave in</div></div>
+      <div class="ex-item" onclick="singleSelect(this,'resp')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">They went cold and silent until I apologised</div></div>
+      <div class="ex-item" onclick="singleSelect(this,'resp')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">They made me feel guilty until I abandoned the boundary</div></div>
+      <div class="ex-item" onclick="singleSelect(this,'resp')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">They reframed it so I seemed unreasonable for having it</div></div>
+      <div class="ex-item" onclick="singleSelect(this,'resp')"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">They found subtle ways to punish me later</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q">Finish this sentence: "I stopped protecting myself because I believed that if I didn't..."</div>
+    <textarea placeholder="Complete the thought honestly..." data-mod="2"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-q">On a scale of 1–10, how guilty do you still feel when you say no to someone?</div>
+    <div class="scale-row" id="scale-guilt">
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,1)">1</button>
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,2)">2</button>
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,3)">3</button>
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,4)">4</button>
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,5)">5</button>
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,6)">6</button>
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,7)">7</button>
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,8)">8</button>
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,9)">9</button>
+      <button class="scale-btn" onclick="setScale('scale-guilt',this,10)">10</button>
+    </div>
+    <div class="scale-labels"><span>NO GUILT AT ALL</span><span>OVERWHELMING GUILT</span></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MODULE 3 -->
+<div class="module" id="mod3">
+  <div class="mod-header">
+    <div class="mod-eyebrow">MODULE 03</div>
+    <div class="mod-title">Naming Your Non-Negotiables</div>
+    <p class="mod-intro">A boundary is only real when you know exactly what it is. Vague boundaries collapse under pressure. This module helps you name yours with precision.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-q">Write 3 non-negotiable boundaries you are committing to — things you will no longer allow, regardless of the reaction.</div>
+    <div class="card-hint">BOUNDARY 01</div>
+    <textarea placeholder="I will no longer allow..." data-mod="3" style="min-height:70px;margin-bottom:10px"></textarea>
+    <div class="card-hint">BOUNDARY 02</div>
+    <textarea placeholder="I will no longer allow..." data-mod="3" style="min-height:70px;margin-bottom:10px"></textarea>
+    <div class="card-hint">BOUNDARY 03</div>
+    <textarea placeholder="I will no longer allow..." data-mod="3" style="min-height:70px"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-q">What do you fear will happen if you hold these boundaries firmly?</div>
+    <textarea placeholder="Be honest — the fear is valid, and naming it takes away some of its power..." data-mod="3"></textarea>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MODULE 4 -->
+<div class="module" id="mod4">
+  <div class="mod-header">
+    <div class="mod-eyebrow">MODULE 04</div>
+    <div class="mod-title">Scripts That Actually Work</div>
+    <p class="mod-intro">Narcissists are skilled at turning your words against you. These scripts are short, calm, and unargumentable. You don't need to justify a boundary — you just need to state it.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-q">The Grey Rock response — when they push for a reaction:</div>
+    <div class="script-box">"I hear you. I'm not going to discuss this further."</div>
+    <div class="card-hint">PRACTISE: Write what you wish you had said in a recent situation</div>
+    <textarea placeholder="In that moment, I could have said..." data-mod="4"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-q">The boundary statement — when they cross a line:</div>
+    <div class="script-box">"When you [specific behaviour], I feel [impact]. I need [clear boundary]. If it continues, I will [consequence]."</div>
+    <div class="card-hint">NOW WRITE YOUR OWN VERSION FOR A REAL SITUATION</div>
+    <textarea placeholder="When you... I feel... I need... If it continues..." data-mod="4"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-q">The exit script — when you need to leave a conversation:</div>
+    <div class="script-box">"I'm not able to continue this conversation right now. I'll come back to it when things are calmer."</div>
+    <div class="card-hint">WHEN IN YOUR LIFE WOULD THIS HAVE HELPED MOST?</div>
+    <textarea placeholder="This would have helped me when..." data-mod="4"></textarea>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MODULE 5 -->
+<div class="module" id="mod5">
+  <div class="mod-header">
+    <div class="mod-eyebrow">MODULE 05</div>
+    <div class="mod-title">Holding the Line — Your Commitment</div>
+    <p class="mod-intro">Knowing your boundaries is one thing. Holding them when the pressure comes is another. This final module is your personal commitment — written by you, for you.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-q">How will you remind yourself that holding a boundary is an act of self-respect, not cruelty?</div>
+    <textarea placeholder="Write this to your future self — for the moment doubt creeps in..." data-mod="5"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-q">Who is one safe person in your life you can tell about these boundaries for accountability?</div>
+    <textarea placeholder="Their name, and why you trust them..." data-mod="5" style="min-height:70px"></textarea>
+  </div>
+
+  <div class="reflection">
+    <div class="reflection-label">FINAL REFLECTION</div>
+    <div class="card-q" style="margin-bottom:12px">"The most powerful thing I realised about my own boundaries through this workbook is..."</div>
+    <textarea placeholder="Write your closing thought..." data-mod="5"></textarea>
+  </div>
+</div>
+
+<!-- COMPLETE -->
+<div class="complete" id="complete">
+  <div class="complete-title">Workbook Complete</div>
+  <p class="complete-sub">You've done something most people never do — you looked at what was taken and chose to take it back.<br>Your boundaries are yours. They always were.</p>
+</div>
+
+<div style="text-align:center;margin-top:32px">
+  <button class="scale-btn" style="border-radius:3px;padding:12px 28px;font-size:10px;letter-spacing:.12em;border:1px solid #333;color:#555;cursor:pointer;background:transparent" onclick="checkComplete()">↓ MARK WORKBOOK COMPLETE</button>
+</div>
+
+<!-- Export -->
+<div class="export-wrap" id="exportWrap">
+  <button class="btn-export" id="exportBtn">Export as PDF →</button>
+  <div class="export-hint" id="exportHint">Complete the workbook to unlock export</div>
+</div>
+
+
+</div>
+
+<div class="footer">
+  <div class="footer-brand">Psychefolio</div>
+  <div class="footer-name">BY SOHAIB NATNOO</div>
+  <p class="footer-copy">© Psychefolio · Workbook 01 · Paid Resource ₹299<br>Not for redistribution · Not a substitute for therapy</p>
+</div>
+
+<script>
+var modProgress={1:false,2:false,3:false,4:false,5:false};
+var workbookComplete = false;
+
+document.querySelectorAll('textarea').forEach(function(t){
+  t.addEventListener('input', function(){
+    var m = t.getAttribute('data-mod');
+    if(m && t.value.trim().length > 10){
+      modProgress[m] = true;
+      updateProgress();
+    }
+  });
+});
+
+function tickEx(el,group){
+  el.classList.toggle('done');
+}
+
+function singleSelect(el,group){
+  var parent = el.parentElement;
+  parent.querySelectorAll('.ex-item').forEach(function(i){ i.classList.remove('done'); });
+  el.classList.add('done');
+}
+
+function setScale(id,btn,val){
+  document.querySelectorAll('#'+id+' .scale-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+function updateProgress(){
+  var done = Object.values(modProgress).filter(Boolean).length;
+  var pct = (done/5)*100;
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('prog-text').textContent = done+' of 5 modules';
+}
+
+function checkComplete(){
+  document.getElementById('complete').classList.add('show');
+  document.getElementById('complete').scrollIntoView({behavior:'smooth',block:'center'});
+  modProgress = {1:true,2:true,3:true,4:true,5:true};
+  updateProgress();
+  workbookComplete = true;
+
+  // Unlock export button
+  var btn = document.getElementById('exportBtn');
+  var hint = document.getElementById('exportHint');
+  btn.classList.add('ready');
+  hint.textContent = 'Your completed workbook will save as a PDF';
+
+  setTimeout(function(){
+    document.getElementById('exportWrap').scrollIntoView({behavior:'smooth',block:'center'});
+  }, 600);
+}
+
+// Export — addEventListener only, no onclick, with setTimeout before print
+document.getElementById('exportBtn').addEventListener('click', function(){
+  if(!workbookComplete) return;
+
+  var date = new Date().toLocaleDateString('en-GB', {day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('printMeta').textContent = 'Completed: ' + date;
+
+  setTimeout(function(){ window.print(); }, 150);
+});
+</script>
+</body>
+</html>
