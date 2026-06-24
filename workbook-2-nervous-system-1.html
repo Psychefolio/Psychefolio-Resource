@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healing the Nervous System — Psychefolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Space+Grotesk:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--y:#fff700;--b:#0a0a0a;--card:#141414;--border:#222;--w:#fff;--muted:#666;--ydim:rgba(255,247,0,0.07);--yborder:rgba(255,247,0,0.22)}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--b);color:var(--w);overflow-x:hidden}
+.strip{background:var(--y);color:#000;text-align:center;padding:9px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;font-weight:700}
+.hero{padding:64px 24px 52px;text-align:center;border-bottom:1px solid var(--border);position:relative}
+.hero::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:120px;height:2px;background:var(--y)}
+.wb-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--y);margin-bottom:22px;opacity:.8}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,6vw,3.8rem);line-height:1.08;margin-bottom:8px}
+.hero h1 em{font-style:italic;color:var(--y)}
+.hero-desc{font-size:13.5px;font-weight:300;color:#777;max-width:440px;margin:16px auto 0;line-height:1.75}
+.progress-bar{max-width:680px;margin:32px auto 0;padding:0 20px}
+.prog-track{height:3px;background:#1e1e1e;border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:var(--y);border-radius:2px;transition:width .4s ease;width:0%}
+.prog-label{display:flex;justify-content:space-between;margin-top:8px;font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.08em}
+.container{max-width:680px;margin:0 auto;padding:0 20px 80px}
+.module{margin-top:48px}
+.mod-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--y);opacity:.7;margin-bottom:8px}
+.mod-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;line-height:1.15}
+.mod-intro{font-size:13.5px;font-weight:300;color:#888;line-height:1.75;margin-top:10px;padding-top:14px;border-top:1px solid var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:24px;margin-bottom:12px}
+.card-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;font-weight:300;color:#ddd;margin-bottom:14px;line-height:1.5}
+.card-hint{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:12px}
+textarea{width:100%;background:#0d0d0d;border:1px solid #222;border-radius:3px;color:#ccc;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:300;line-height:1.7;padding:14px;resize:vertical;min-height:100px;outline:none;transition:border-color .2s}
+textarea:focus{border-color:var(--yborder)}
+textarea::placeholder{color:#333}
+.ex-checks .ex-item{display:flex;align-items:flex-start;gap:12px;padding:11px 14px;background:#0d0d0d;border:1px solid #1a1a1a;border-radius:3px;margin-bottom:5px;cursor:pointer;transition:all .15s;user-select:none}
+.ex-checks .ex-item:hover{border-color:#2a2a2a}
+.ex-checks .ex-item.done{background:var(--ydim);border-color:var(--yborder)}
+.ex-box{width:18px;height:18px;border:1.5px solid #333;border-radius:3px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ex-item.done .ex-box{background:var(--y);border-color:var(--y)}
+.ex-tick{display:none;width:10px;height:10px}
+.ex-item.done .ex-tick{display:block}
+.ex-text{font-size:13px;font-weight:300;color:#999;line-height:1.5}
+.ex-item.done .ex-text{color:#ddd}
+.scale-row{display:flex;align-items:center;width:100%;margin:10px 0 6px}
+.scale-btn{flex:1;padding:10px 4px;background:#0d0d0d;border:1px solid #222;color:#555;font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;text-align:center}
+.scale-btn:first-child{border-radius:3px 0 0 3px}
+.scale-btn:last-child{border-radius:0 3px 3px 0}
+.scale-btn:not(:first-child){border-left:none}
+.scale-btn:hover{border-color:var(--yborder);color:var(--y)}
+.scale-btn.active{background:var(--ydim);border-color:var(--yborder);color:var(--y)}
+.scale-labels{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:9px;color:#444;margin-top:4px}
+.practice-box{background:#0a0a0a;border:1px solid #1e1e1e;border-radius:3px;padding:18px 20px;margin:14px 0}
+.practice-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--y);margin-bottom:10px}
+.practice-step{font-size:13px;font-weight:300;color:#888;line-height:1.8;padding:5px 0;border-bottom:1px solid #1a1a1a}
+.practice-step:last-child{border-bottom:none}
+.practice-step strong{color:#bbb;font-weight:500}
+.reflection{background:var(--ydim);border:1px solid var(--yborder);border-radius:4px;padding:22px;margin-top:12px}
+.reflection-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--y);margin-bottom:12px}
+.divider{border:none;border-top:1px solid var(--border);margin:48px 0 0}
+.complete{display:none;margin-top:48px;background:var(--ydim);border:1px solid var(--yborder);border-radius:4px;padding:36px 28px;text-align:center;animation:fadeUp .5s ease}
+.complete.show{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.complete-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--y);margin-bottom:10px}
+.complete-sub{font-size:13.5px;font-weight:300;color:#888;line-height:1.7}
+.footer{text-align:center;padding:32px 20px 40px;border-top:1px solid var(--border);margin-top:60px}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--y);letter-spacing:.06em}
+.footer-name{font-family:'Space Mono',monospace;font-size:10px;color:#333;letter-spacing:.12em;margin-top:4px}
+.footer-copy{font-size:11px;color:#2a2a2a;margin-top:10px;line-height:1.7}
+@media(max-width:480px){.hero{padding:48px 18px 40px}}
+
+/* EXPORT */
+.export-wrap{text-align:center;margin-top:28px;display:none}
+.export-wrap.show{display:block}
+.btn-export{background:var(--y);color:#000;border:none;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px 32px;border-radius:3px;cursor:pointer;transition:opacity .15s}
+.btn-export:hover{opacity:.82}
+.btn-export:active{opacity:.6}
+.export-hint{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;color:#333;margin-top:10px;text-transform:uppercase}
+
+/* PRINT HEADER */
+.print-header{display:none;padding:24px 24px 16px;border-bottom:2px solid var(--y);margin-bottom:8px}
+.ph-brand{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--y);text-transform:uppercase;margin-bottom:6px}
+.ph-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600}
+.ph-meta{font-family:'Space Mono',monospace;font-size:9px;color:#666;margin-top:6px;line-height:1.7}
+
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#0a0a0a!important}
+  .strip{display:none!important}
+  .progress-bar{display:none!important}
+  .export-wrap{display:none!important}
+  .print-header{display:block!important}
+  .complete{display:block!important}
+  textarea{border-color:#2a2a2a!important;color:#ccc!important}
+  .scale-btn.active{background:var(--ydim)!important;border-color:var(--yborder)!important;color:var(--y)!important}
+  .ex-item.done{background:var(--ydim)!important;border-color:var(--yborder)!important}
+}
+</style>
+</head>
+<body>
+
+
+<!-- Print header -->
+<div class="print-header" id="printHeader">
+  <div class="ph-brand">Psychefolio by Sohaib Natnoo — Workbook 02</div>
+  <div class="ph-title">Healing the Nervous System</div>
+  <div class="ph-meta" id="printMeta"></div>
+</div>
+
+<div class="strip">PAID RESOURCE · ₹299 · PSYCHEFOLIO</div>
+
+<div class="hero">
+  <div class="wb-label">WORKBOOK 02 · PSYCHEFOLIO</div>
+  <h1>Healing the<br><em>Nervous System</em></h1>
+  <p class="hero-desc">Narcissistic abuse doesn't just hurt emotionally — it rewires your body's threat response. This workbook helps you understand what happened inside you, and begin to feel safe again.</p>
+</div>
+
+<div class="progress-bar">
+  <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+  <div class="prog-label"><span>Progress</span><span id="prog-text">0 of 5 modules</span></div>
+</div>
+
+<div class="container">
+
+<!-- MODULE 1 -->
+<div class="module">
+  <div class="mod-eyebrow">MODULE 01</div>
+  <div class="mod-title">Your Body Kept the Score</div>
+  <p class="mod-intro">Living with a narcissist keeps your nervous system in a constant state of high alert. Over time, your body stops being able to tell the difference between real danger and ordinary life. This is not weakness — it is biology.</p>
+
+  <div class="card">
+    <div class="card-q">Which of these do you experience regularly, even now?</div>
+    <div class="card-hint">TICK ALL THAT APPLY</div>
+    <div class="ex-checks">
+      <div class="ex-item"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Sudden anxiety with no obvious cause</div></div>
+      <div class="ex-item"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Hypervigilance — scanning rooms, monitoring moods, bracing</div></div>
+      <div class="ex-item"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Difficulty sleeping or waking up with dread</div></div>
+      <div class="ex-item"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Flinching or freezing at raised voices or sudden movements</div></div>
+      <div class="ex-item"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Exhaustion even after rest — feeling perpetually depleted</div></div>
+      <div class="ex-item"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Feeling emotionally numb or disconnected from yourself</div></div>
+      <div class="ex-item"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Physical tension — jaw, shoulders, stomach — that won't release</div></div>
+      <div class="ex-item"><div class="ex-box"><svg class="ex-tick" viewBox="0 0 10 10" fill="none"><polyline points="1,5 3.5,8 9,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ex-text">Being easily startled by completely ordinary things</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q">Where in your body do you most feel the effects of what you went through?</div>
+    <textarea placeholder="E.g. tightness in my chest when I hear a certain tone of voice... my stomach drops when someone goes quiet..." data-mod="1"></textarea>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MODULE 2 -->
+<div class="module">
+  <div class="mod-eyebrow">MODULE 02</div>
+  <div class="mod-title">Mapping Your Triggers</div>
+  <p class="mod-intro">A trigger is anything — a word, a tone, a silence, a smell — that sends your nervous system back into survival mode. Naming them is the first step to separating the past from the present.</p>
+
+  <div class="card">
+    <div class="card-q">List up to 5 triggers that still activate a stress response in you today.</div>
+    <div class="card-hint">TRIGGER 01 — What happens / what it reminds your body of</div>
+    <textarea placeholder="E.g. Someone going quiet suddenly makes me panic that I've done something wrong..." data-mod="2" style="min-height:70px;margin-bottom:10px"></textarea>
+    <div class="card-hint">TRIGGER 02</div>
+    <textarea placeholder="" data-mod="2" style="min-height:70px;margin-bottom:10px"></textarea>
+    <div class="card-hint">TRIGGER 03</div>
+    <textarea placeholder="" data-mod="2" style="min-height:70px"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-q">When you are triggered, what does your body do first — before your mind catches up?</div>
+    <textarea placeholder="My heart races / I go cold / I freeze / I feel sick / I dissociate..." data-mod="2"></textarea>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MODULE 3 -->
+<div class="module">
+  <div class="mod-eyebrow">MODULE 03</div>
+  <div class="mod-title">Coming Back to the Present</div>
+  <p class="mod-intro">Grounding techniques interrupt the nervous system's spiral. They work by anchoring you to now — the present moment, which is safe. Here are three practices to learn and keep.</p>
+
+  <div class="card">
+    <div class="practice-box">
+      <div class="practice-title">THE 5-4-3-2-1 GROUNDING METHOD</div>
+      <div class="practice-step"><strong>5 things</strong> you can see right now</div>
+      <div class="practice-step"><strong>4 things</strong> you can physically feel (floor, air, fabric)</div>
+      <div class="practice-step"><strong>3 things</strong> you can hear</div>
+      <div class="practice-step"><strong>2 things</strong> you can smell</div>
+      <div class="practice-step"><strong>1 thing</strong> you can taste</div>
+    </div>
+    <div class="card-hint">DO IT NOW — THEN WRITE HOW YOUR BODY FEELS AFTER</div>
+    <textarea placeholder="Before I felt... After I feel..." data-mod="3"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="practice-box">
+      <div class="practice-title">BOX BREATHING — 4 COUNTS EACH SIDE</div>
+      <div class="practice-step"><strong>Inhale</strong> for 4 counts</div>
+      <div class="practice-step"><strong>Hold</strong> for 4 counts</div>
+      <div class="practice-step"><strong>Exhale</strong> for 4 counts</div>
+      <div class="practice-step"><strong>Hold</strong> for 4 counts — repeat 4 times</div>
+    </div>
+    <div class="card-hint">WHEN WOULD THIS HAVE HELPED YOU MOST THIS WEEK?</div>
+    <textarea placeholder="I could have used this when..." data-mod="3"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-q">On a scale of 1–10, how safe does your body feel right now, in this moment?</div>
+    <div class="scale-row" id="scale-safe">
+      <button class="scale-btn" data-scale="scale-safe">1</button>
+      <button class="scale-btn" data-scale="scale-safe">2</button>
+      <button class="scale-btn" data-scale="scale-safe">3</button>
+      <button class="scale-btn" data-scale="scale-safe">4</button>
+      <button class="scale-btn" data-scale="scale-safe">5</button>
+      <button class="scale-btn" data-scale="scale-safe">6</button>
+      <button class="scale-btn" data-scale="scale-safe">7</button>
+      <button class="scale-btn" data-scale="scale-safe">8</button>
+      <button class="scale-btn" data-scale="scale-safe">9</button>
+      <button class="scale-btn" data-scale="scale-safe">10</button>
+    </div>
+    <div class="scale-labels"><span>NOT SAFE AT ALL</span><span>COMPLETELY SAFE</span></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MODULE 4 -->
+<div class="module">
+  <div class="mod-eyebrow">MODULE 04</div>
+  <div class="mod-title">Rebuilding a Sense of Safety</div>
+  <p class="mod-intro">Safety isn't just the absence of danger — it's a feeling your nervous system has to learn to trust again. This takes time. These exercises help you build evidence that the present is different from the past.</p>
+
+  <div class="card">
+    <div class="card-q">What are 5 things in your current life that are safe, stable, or good — however small?</div>
+    <textarea placeholder="1. My bedroom feels like mine again&#10;2. My cat sits with me in the mornings&#10;3. I slept through the night twice this week..." data-mod="4" style="min-height:130px"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-q">What is one thing you do — or could start doing — each day that signals safety to your body?</div>
+    <textarea placeholder="Morning tea without dread. A walk. Telling someone the truth about how I feel. Sleeping without keeping one ear open..." data-mod="4"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-q">Write a message to your nervous system — as if it's a part of you that was just trying to survive:</div>
+    <textarea placeholder="You were doing the best you could. You kept me alive. You don't have to stay on guard anymore because..." data-mod="4"></textarea>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MODULE 5 -->
+<div class="module">
+  <div class="mod-eyebrow">MODULE 05</div>
+  <div class="mod-title">Your Healing Commitment</div>
+  <p class="mod-intro">Nervous system healing is not linear. There will be good days and hard days. What matters is that you keep returning to yourself.</p>
+
+  <div class="card">
+    <div class="card-q">What does "healed" look, feel, or sound like for you? Describe your future self in as much detail as you can.</div>
+    <textarea placeholder="I wake up without anxiety. I trust my own reactions. When someone raises their voice I don't crumble..." data-mod="5"></textarea>
+  </div>
+
+  <div class="reflection">
+    <div class="reflection-label">CLOSING REFLECTION</div>
+    <div class="card-q" style="margin-bottom:12px">"The one thing I will do differently this week to show my nervous system that it is safe now is..."</div>
+    <textarea placeholder="Write your commitment here..." data-mod="5"></textarea>
+  </div>
+</div>
+
+<div class="complete" id="complete">
+  <div class="complete-title">Workbook Complete</div>
+  <p class="complete-sub">Your nervous system survived something it was never meant to endure.<br>Healing is slow. But you've already begun.</p>
+</div>
+
+<div style="text-align:center;margin-top:32px">
+  <button style="border-radius:3px;padding:12px 28px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;border:1px solid #333;color:#555;cursor:pointer;background:transparent" id="completeBtn">↓ MARK WORKBOOK COMPLETE</button>
+</div>
+
+<div style="text-align:center;margin-top:20px;padding-bottom:48px">
+  <button id="exportBtn" style="background:#fff700;color:#000;border:none;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px 32px;cursor:pointer;border-radius:3px;display:inline-block">Export as PDF →</button>
+  <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;color:#555;margin-top:10px;text-transform:uppercase">Save your completed workbook as a PDF</div>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-brand">Psychefolio</div>
+  <div class="footer-name">BY SOHAIB NATNOO</div>
+  <p class="footer-copy">© Psychefolio · Workbook 02 · Paid Resource ₹299<br>Not for redistribution · Not a substitute for therapy</p>
+</div>
+
+
+<script>
+var modProgress = {1:false, 2:false, 3:false, 4:false, 5:false};
+var workbookComplete = false;
+
+// Textarea progress tracking
+var textareas = document.querySelectorAll('textarea');
+for (var ti = 0; ti < textareas.length; ti++) {
+  textareas[ti].addEventListener('input', function() {
+    var m = this.getAttribute('data-mod');
+    if (m && this.value.trim().length > 10) {
+      modProgress[m] = true;
+      updateProgress();
+    }
+  });
+}
+
+// Tick items — event delegation on entire document body
+document.body.addEventListener('click', function(e) {
+  var item = e.target.closest('.ex-item');
+  if (item) {
+    item.classList.toggle('done');
+    return;
+  }
+
+  // Scale buttons — via data-scale attribute
+  var scaleBtn = e.target.closest('.scale-btn[data-scale]');
+  if (scaleBtn) {
+    var id = scaleBtn.getAttribute('data-scale');
+    var allBtns = document.querySelectorAll('#' + id + ' .scale-btn');
+    for (var i = 0; i < allBtns.length; i++) allBtns[i].classList.remove('active');
+    scaleBtn.classList.add('active');
+    return;
+  }
+
+  // Complete button
+  if (e.target.closest('#completeBtn')) {
+    checkComplete();
+    return;
+  }
+});
+
+function updateProgress() {
+  var done = 0;
+  var keys = Object.keys(modProgress);
+  for (var i = 0; i < keys.length; i++) {
+    if (modProgress[keys[i]]) done++;
+  }
+  document.getElementById('prog').style.width = (done / 5 * 100) + '%';
+  document.getElementById('prog-text').textContent = done + ' of 5 modules';
+}
+
+function checkComplete() {
+  document.getElementById('complete').classList.add('show');
+  document.getElementById('complete').scrollIntoView({behavior:'smooth', block:'center'});
+  var keys = Object.keys(modProgress);
+  for (var i = 0; i < keys.length; i++) modProgress[keys[i]] = true;
+  updateProgress();
+  workbookComplete = true;
+
+  setTimeout(function() {
+    document.getElementById('exportBtn').scrollIntoView({behavior:'smooth', block:'center'});
+  }, 600);
+}
+
+// Export — always works, no gate
+document.getElementById('exportBtn').addEventListener('click', function() {
+  var date = new Date().toLocaleDateString('en-GB', {day:'2-digit', month:'long', year:'numeric'});
+  document.getElementById('printMeta').textContent = 'Completed: ' + date;
+  setTimeout(function() { window.print(); }, 150);
+});
+</script>
+</body>
+</html>
