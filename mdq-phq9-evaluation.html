@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Psychefolio — Mood & Depression Baseline Evaluation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --y: #fff700;
+    --bg: #000;
+    --white: #fff;
+    --rule: rgba(255,255,255,0.08);
+    --dim: rgba(255,255,255,0.35);
+  }
+  ::selection { background: var(--y); color: #000; }
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 300;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* BRAND */
+  .brand-bar {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 16px 52px; border-bottom: 1px solid var(--rule);
+  }
+  .brand-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--y); letter-spacing: 0.02em; }
+  .brand-by { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
+
+  /* HEADER */
+  .page-header {
+    padding: 48px 52px 40px; border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: start;
+  }
+  .eyebrow { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--y); text-transform: uppercase; margin-bottom: 18px; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 5vw, 58px); font-weight: 600; line-height: 1.02; letter-spacing: -0.01em; }
+  h1 em { font-style: italic; color: var(--y); }
+  .header-note { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.38); margin-top: 16px; max-width: 460px; line-height: 1.7; }
+  .date-block { text-align: right; }
+  .date-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.28); text-transform: uppercase; margin-bottom: 6px; }
+  .date-value { font-family: 'Cormorant Garamond', serif; font-size: 20px; }
+
+  /* CLIENT INFO */
+  .client-info {
+    padding: 32px 52px; border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 48px;
+  }
+  .info-field label { display: block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 8px; }
+  .info-field input {
+    width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.15);
+    color: var(--white); font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 300;
+    padding: 8px 0 10px; outline: none; transition: border-color 0.2s; border-radius: 0; appearance: none; -webkit-appearance: none;
+  }
+  .info-field input:focus { border-bottom-color: var(--y); }
+  .info-field input::placeholder { color: rgba(255,255,255,0.22); }
+
+  /* PROGRESS */
+  .progress-wrap { padding: 20px 52px 24px; border-bottom: 1px solid var(--rule); }
+  .progress-meta { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .progress-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.28); text-transform: uppercase; }
+  .progress-count { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: var(--y); }
+  .progress-track { height: 2px; background: rgba(255,255,255,0.08); }
+  .progress-fill { height: 2px; background: var(--y); width: 0%; transition: width 0.35s ease; }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    padding: 28px 52px 0; border-top: 1px solid var(--rule);
+    display: flex; align-items: center; gap: 20px;
+  }
+  .sec-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--y); letter-spacing: 0.1em; }
+  .sec-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
+  .sec-desc { padding: 10px 52px 24px; font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 580px; }
+
+  /* INSTRUCTIONS */
+  .instructions {
+    padding: 20px 52px 24px; background: rgba(255,247,0,0.03); border-bottom: 1px solid var(--rule);
+  }
+  .instructions-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: var(--y); text-transform: uppercase; margin-bottom: 10px; }
+  .instructions p { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 600px; }
+
+  /* QUESTIONS */
+  .question-item { border-bottom: 1px solid var(--rule); padding: 24px 52px; transition: background 0.15s; }
+  .question-item:hover { background: rgba(255,255,255,0.01); }
+  .question-item.answered { background: rgba(255,247,0,0.02); }
+  .q-row { display: flex; gap: 20px; align-items: flex-start; }
+  .q-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--y); letter-spacing: 0.1em; flex-shrink: 0; min-width: 32px; padding-top: 3px; }
+  .q-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; flex: 1; }
+  .q-done { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: var(--y); background: rgba(255,247,0,0.1); padding: 3px 8px; flex-shrink: 0; opacity: 0; transition: opacity 0.2s; align-self: center; }
+  .question-item.answered .q-done { opacity: 1; }
+
+  /* BINARY OPTIONS (MDQ Yes/No) */
+  .options-binary { display: flex; gap: 12px; margin-top: 18px; margin-left: 52px; }
+  .opt-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.5);
+    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    padding: 10px 28px; cursor: pointer; text-align: center; transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation; text-transform: uppercase;
+  }
+  .opt-btn:hover { border-color: rgba(255,247,0,0.4); color: var(--white); background: rgba(255,247,0,0.04); }
+  .opt-btn.selected { background: var(--y); border-color: var(--y); color: #000; font-weight: 700; }
+
+  /* 4-WAY OPTIONS (PHQ-9) */
+  .options-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    margin-top: 18px; margin-left: 52px;
+  }
+  .option-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.5);
+    font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 400;
+    padding: 12px 8px; cursor: pointer; text-align: center; transition: all 0.15s; line-height: 1.3;
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  }
+  .option-btn:hover { border-color: rgba(255,247,0,0.4); color: var(--white); background: rgba(255,247,0,0.04); }
+  .option-btn.selected { background: var(--y); border-color: var(--y); color: #000; font-weight: 500; }
+  .option-score { display: block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; margin-bottom: 4px; opacity: 0.5; }
+  .option-btn.selected .option-score { opacity: 0.6; }
+
+  /* MDQ FOLLOW-UPS */
+  .mdq-followup { border-bottom: 1px solid var(--rule); padding: 24px 52px; background: rgba(255,247,0,0.02); }
+  .mdq-followup .q-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 16px; }
+  .mdq-followup .q-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--y); letter-spacing: 0.1em; margin-bottom: 10px; display: block; }
+
+  /* INTERFERENCE OPTIONS */
+  .options-4 { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+  @media(min-width:520px){ .options-4 { grid-template-columns: repeat(4,1fr); } }
+
+  /* RESULTS */
+  .results-section { display: none; padding: 44px 52px; border-top: 2px solid rgba(255,247,0,0.2); }
+  .results-section.visible { display: block; }
+  .results-header { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--y); text-transform: uppercase; margin-bottom: 36px; }
+
+  .result-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 40px; }
+
+  .result-card { padding: 32px; border: 1px solid rgba(255,255,255,0.08); }
+  .rc-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-bottom: 12px; }
+  .rc-score { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 700; line-height: 1; color: var(--y); }
+  .rc-outof { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); margin-top: 4px; margin-bottom: 16px; }
+  .rc-severity { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+  .rc-bar-track { height: 2px; background: rgba(255,255,255,0.08); margin-bottom: 6px; }
+  .rc-bar-fill { height: 2px; background: var(--y); width: 0%; transition: width 0.6s ease; }
+
+  /* CLINICAL NOTES */
+  .combined-interp { margin-top: 40px; }
+  .interp-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.18em; color: var(--y); text-transform: uppercase; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,247,0,0.15); }
+  .note-block { border-left: 2px solid rgba(255,247,0,0.3); padding: 16px 20px; margin-bottom: 14px; }
+  .note-tag { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.14em; color: var(--y); text-transform: uppercase; margin-bottom: 8px; }
+  .note-text { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.75; }
+
+  /* FOOTER */
+  .page-footer { padding: 36px 52px 60px; border-top: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .footer-copy .hint { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .footer-copy .sub { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.25); }
+  .btn-export {
+    background: var(--y); color: #000; border: none; font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 14px 28px; cursor: pointer; transition: opacity 0.15s; flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    opacity: 0.3; pointer-events: none;
+  }
+  .btn-export.ready { opacity: 1; pointer-events: auto; }
+  .btn-export.ready:hover { opacity: 0.82; }
+  .btn-export.ready:active { opacity: 0.6; }
+
+  /* RESPONSIVE */
+  @media(max-width:680px){
+    .brand-bar, .page-header, .client-info, .progress-wrap, .instructions,
+    .section-divider, .sec-desc, .question-item, .mdq-followup, .results-section, .page-footer
+    { padding-left: 24px; padding-right: 24px; }
+    .page-header { grid-template-columns: 1fr; }
+    .client-info { grid-template-columns: 1fr; gap: 20px 0; }
+    .options-row { grid-template-columns: repeat(2,1fr); margin-left: 0; }
+    .options-binary { margin-left: 0; }
+    .result-cards { grid-template-columns: 1fr; }
+  }
+
+  /* PRINT */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #000 !important; }
+    .no-print { display: none !important; }
+    .progress-wrap { display: none !important; }
+    .page-footer { display: none !important; }
+    .print-header { display: flex !important; }
+    .results-section { display: block !important; }
+    .question-item, .mdq-followup { page-break-inside: avoid; }
+    .options-row { margin-left: 52px !important; }
+  }
+
+  /* PRINT HEADER */
+  .print-header {
+    display: none; padding: 28px 52px 20px; border-bottom: 2px solid var(--y);
+    margin-bottom: 4px; justify-content: space-between; align-items: flex-end;
+  }
+  .ph-brand { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.18em; color: var(--y); text-transform: uppercase; margin-bottom: 6px; }
+  .ph-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+  .ph-meta { text-align: right; font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.45); line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- Print header -->
+<div class="print-header" id="printHeader">
+  <div>
+    <div class="ph-brand">Psychefolio by Sohaib Natnoo — Confidential</div>
+    <div class="ph-title">Mood &amp; Depression Baseline — MDQ + PHQ-9</div>
+  </div>
+  <div class="ph-meta" id="printMeta"></div>
+</div>
+
+<!-- Brand bar -->
+<div class="brand-bar">
+  <div class="brand-name">Psychefolio</div>
+  <div class="brand-by">by Sohaib Natnoo</div>
+</div>
+
+<!-- Header -->
+<header class="page-header">
+  <div>
+    <div class="eyebrow">BASELINE EVALUATION — MDQ + PHQ-9</div>
+    <h1>Mood &amp; Depression<br><em>Assessment</em></h1>
+    <p class="header-note">This evaluation combines two validated clinical tools — the Mood Disorder Questionnaire (MDQ) and the Patient Health Questionnaire (PHQ-9) — to build a comprehensive baseline picture of your mood and emotional experience.</p>
+  </div>
+  <div class="date-block no-print">
+    <div class="date-label">Assessment Date</div>
+    <div class="date-value" id="todayDate"></div>
+  </div>
+</header>
+
+<!-- Client info -->
+<div class="client-info">
+  <div class="info-field">
+    <label>Full Name</label>
+    <input type="text" id="client_name" placeholder="Your name" />
+  </div>
+  <div class="info-field">
+    <label>Age</label>
+    <input type="number" id="client_age" placeholder="Years" min="0" max="120" />
+  </div>
+  <div class="info-field">
+    <label>Session Number</label>
+    <input type="text" id="session_num" placeholder="e.g. Session 01" />
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress-wrap no-print">
+  <div class="progress-meta">
+    <span class="progress-label">Questions answered</span>
+    <span class="progress-count" id="progressCount">0 / 22</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PART 1 — MDQ -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<div class="section-divider" style="margin-top:8px;">
+  <span class="sec-num">01 —</span>
+  <span class="sec-title">Mood Disorder Questionnaire</span>
+</div>
+<div class="sec-desc">The MDQ screens for bipolar spectrum disorders. It asks about experiences you may have had at any point in your life — not just recently. Answer based on your lifetime experience.</div>
+
+<div class="instructions">
+  <div class="instructions-label">How to respond</div>
+  <p>For each statement below, select <strong style="color:rgba(255,255,255,0.7);font-weight:500;">YES</strong> if it describes something you have experienced at any point in your life, or <strong style="color:rgba(255,255,255,0.7);font-weight:500;">NO</strong> if it does not apply to you.</p>
+</div>
+
+<div id="mdqWrap">
+
+  <div class="question-item" data-q="m1" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M01 —</span>
+      <span class="q-text">You felt so good or so hyper that other people thought you were not your normal self, or you were so hyper that you got into trouble</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m1" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m1" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m2" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M02 —</span>
+      <span class="q-text">You were so irritable that you shouted at people or started fights or arguments</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m2" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m2" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m3" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M03 —</span>
+      <span class="q-text">You felt much more self-confident than usual</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m3" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m3" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m4" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M04 —</span>
+      <span class="q-text">You got much less sleep than usual and found you did not really miss it</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m4" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m4" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m5" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M05 —</span>
+      <span class="q-text">You were much more talkative or spoke much faster than usual</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m5" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m5" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m6" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M06 —</span>
+      <span class="q-text">Thoughts raced through your head or you could not slow your mind down</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m6" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m6" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m7" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M07 —</span>
+      <span class="q-text">You were so easily distracted by things around you that you had trouble concentrating or staying on track</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m7" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m7" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m8" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M08 —</span>
+      <span class="q-text">You had much more energy than usual</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m8" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m8" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m9" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M09 —</span>
+      <span class="q-text">You were much more active or did many more things than usual</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m9" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m9" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m10" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M10 —</span>
+      <span class="q-text">You were much more social or outgoing than usual — for example, you telephoned friends in the middle of the night</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m10" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m10" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m11" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M11 —</span>
+      <span class="q-text">You were much more interested in sex than usual</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m11" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m11" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m12" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M12 —</span>
+      <span class="q-text">You did things that were unusual for you or that other people might have thought were excessive, foolish, or risky</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m12" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m12" data-val="0">No</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="m13" data-section="mdq">
+    <div class="q-row">
+      <span class="q-num">M13 —</span>
+      <span class="q-text">Spending money got you or your family in trouble</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-binary">
+      <button class="opt-btn" data-q="m13" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m13" data-val="0">No</button>
+    </div>
+  </div>
+
+  <!-- MDQ Q14 — Same time -->
+  <div class="mdq-followup" data-q="m14" data-section="mdq">
+    <span class="q-num">M14 —</span>
+    <div class="q-text">If you checked YES to more than one of the above statements — did several of these things happen during the same period of time?</div>
+    <div class="options-binary" style="margin-top:16px;margin-left:0">
+      <button class="opt-btn" data-q="m14" data-val="1">Yes</button>
+      <button class="opt-btn" data-q="m14" data-val="0">No</button>
+    </div>
+  </div>
+
+  <!-- MDQ Q15 — Interference -->
+  <div class="mdq-followup" data-q="m15" data-section="mdq">
+    <span class="q-num">M15 —</span>
+    <div class="q-text">How much of a problem did any of these behaviours cause you — such as being unable to work; having family, money, or legal troubles; or getting into arguments or fights?</div>
+    <div class="options-4" style="margin-top:16px;gap:10px;">
+      <button class="opt-btn" data-q="m15" data-val="0">No problem</button>
+      <button class="opt-btn" data-q="m15" data-val="1">Minor problem</button>
+      <button class="opt-btn" data-q="m15" data-val="2">Moderate problem</button>
+      <button class="opt-btn" data-q="m15" data-val="3">Serious problem</button>
+    </div>
+  </div>
+
+</div><!-- /mdqWrap -->
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PART 2 — PHQ-9 -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<div class="section-divider" style="margin-top:24px; padding-top:28px;">
+  <span class="sec-num">02 —</span>
+  <span class="sec-title">Patient Health Questionnaire</span>
+</div>
+<div class="sec-desc">The PHQ-9 measures the severity of depressive symptoms over the past two weeks. Unlike the MDQ which looks at lifetime experiences, the PHQ-9 focuses on how you have been feeling recently.</div>
+
+<div class="instructions">
+  <div class="instructions-label">How to respond</div>
+  <p>Over the <strong style="color:rgba(255,255,255,0.7);font-weight:500;">last 2 weeks</strong>, how often have you been bothered by each of the following?</p>
+</div>
+
+<div id="phqWrap">
+
+  <div class="question-item" data-q="p1" data-section="phq">
+    <div class="q-row">
+      <span class="q-num">P01 —</span>
+      <span class="q-text">Little interest or pleasure in doing things</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-row">
+      <button class="option-btn" data-q="p1" data-score="0"><span class="option-score">SCORE 0</span>Not at all</button>
+      <button class="option-btn" data-q="p1" data-score="1"><span class="option-score">SCORE 1</span>Several days</button>
+      <button class="option-btn" data-q="p1" data-score="2"><span class="option-score">SCORE 2</span>More than half the days</button>
+      <button class="option-btn" data-q="p1" data-score="3"><span class="option-score">SCORE 3</span>Nearly every day</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="p2" data-section="phq">
+    <div class="q-row">
+      <span class="q-num">P02 —</span>
+      <span class="q-text">Feeling down, depressed, or hopeless</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-row">
+      <button class="option-btn" data-q="p2" data-score="0"><span class="option-score">SCORE 0</span>Not at all</button>
+      <button class="option-btn" data-q="p2" data-score="1"><span class="option-score">SCORE 1</span>Several days</button>
+      <button class="option-btn" data-q="p2" data-score="2"><span class="option-score">SCORE 2</span>More than half the days</button>
+      <button class="option-btn" data-q="p2" data-score="3"><span class="option-score">SCORE 3</span>Nearly every day</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="p3" data-section="phq">
+    <div class="q-row">
+      <span class="q-num">P03 —</span>
+      <span class="q-text">Trouble falling or staying asleep, or sleeping too much</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-row">
+      <button class="option-btn" data-q="p3" data-score="0"><span class="option-score">SCORE 0</span>Not at all</button>
+      <button class="option-btn" data-q="p3" data-score="1"><span class="option-score">SCORE 1</span>Several days</button>
+      <button class="option-btn" data-q="p3" data-score="2"><span class="option-score">SCORE 2</span>More than half the days</button>
+      <button class="option-btn" data-q="p3" data-score="3"><span class="option-score">SCORE 3</span>Nearly every day</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="p4" data-section="phq">
+    <div class="q-row">
+      <span class="q-num">P04 —</span>
+      <span class="q-text">Feeling tired or having little energy</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-row">
+      <button class="option-btn" data-q="p4" data-score="0"><span class="option-score">SCORE 0</span>Not at all</button>
+      <button class="option-btn" data-q="p4" data-score="1"><span class="option-score">SCORE 1</span>Several days</button>
+      <button class="option-btn" data-q="p4" data-score="2"><span class="option-score">SCORE 2</span>More than half the days</button>
+      <button class="option-btn" data-q="p4" data-score="3"><span class="option-score">SCORE 3</span>Nearly every day</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="p5" data-section="phq">
+    <div class="q-row">
+      <span class="q-num">P05 —</span>
+      <span class="q-text">Poor appetite or overeating</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-row">
+      <button class="option-btn" data-q="p5" data-score="0"><span class="option-score">SCORE 0</span>Not at all</button>
+      <button class="option-btn" data-q="p5" data-score="1"><span class="option-score">SCORE 1</span>Several days</button>
+      <button class="option-btn" data-q="p5" data-score="2"><span class="option-score">SCORE 2</span>More than half the days</button>
+      <button class="option-btn" data-q="p5" data-score="3"><span class="option-score">SCORE 3</span>Nearly every day</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="p6" data-section="phq">
+    <div class="q-row">
+      <span class="q-num">P06 —</span>
+      <span class="q-text">Feeling bad about yourself — or that you are a failure or have let yourself or your family down</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-row">
+      <button class="option-btn" data-q="p6" data-score="0"><span class="option-score">SCORE 0</span>Not at all</button>
+      <button class="option-btn" data-q="p6" data-score="1"><span class="option-score">SCORE 1</span>Several days</button>
+      <button class="option-btn" data-q="p6" data-score="2"><span class="option-score">SCORE 2</span>More than half the days</button>
+      <button class="option-btn" data-q="p6" data-score="3"><span class="option-score">SCORE 3</span>Nearly every day</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="p7" data-section="phq">
+    <div class="q-row">
+      <span class="q-num">P07 —</span>
+      <span class="q-text">Trouble concentrating on things, such as reading the newspaper or watching television</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-row">
+      <button class="option-btn" data-q="p7" data-score="0"><span class="option-score">SCORE 0</span>Not at all</button>
+      <button class="option-btn" data-q="p7" data-score="1"><span class="option-score">SCORE 1</span>Several days</button>
+      <button class="option-btn" data-q="p7" data-score="2"><span class="option-score">SCORE 2</span>More than half the days</button>
+      <button class="option-btn" data-q="p7" data-score="3"><span class="option-score">SCORE 3</span>Nearly every day</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="p8" data-section="phq">
+    <div class="q-row">
+      <span class="q-num">P08 —</span>
+      <span class="q-text">Moving or speaking so slowly that other people could have noticed — or the opposite, being so fidgety or restless that you have been moving around much more than usual</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-row">
+      <button class="option-btn" data-q="p8" data-score="0"><span class="option-score">SCORE 0</span>Not at all</button>
+      <button class="option-btn" data-q="p8" data-score="1"><span class="option-score">SCORE 1</span>Several days</button>
+      <button class="option-btn" data-q="p8" data-score="2"><span class="option-score">SCORE 2</span>More than half the days</button>
+      <button class="option-btn" data-q="p8" data-score="3"><span class="option-score">SCORE 3</span>Nearly every day</button>
+    </div>
+  </div>
+
+  <div class="question-item" data-q="p9" data-section="phq">
+    <div class="q-row">
+      <span class="q-num">P09 —</span>
+      <span class="q-text">Thoughts that you would be better off dead, or thoughts of hurting yourself in some way</span>
+      <span class="q-done">✓</span>
+    </div>
+    <div class="options-row">
+      <button class="option-btn" data-q="p9" data-score="0"><span class="option-score">SCORE 0</span>Not at all</button>
+      <button class="option-btn" data-q="p9" data-score="1"><span class="option-score">SCORE 1</span>Several days</button>
+      <button class="option-btn" data-q="p9" data-score="2"><span class="option-score">SCORE 2</span>More than half the days</button>
+      <button class="option-btn" data-q="p9" data-score="3"><span class="option-score">SCORE 3</span>Nearly every day</button>
+    </div>
+  </div>
+
+</div><!-- /phqWrap -->
+
+<!-- RESULTS -->
+<div class="results-section" id="resultsSection">
+  <div class="results-header">ASSESSMENT RESULTS — AUTO INTERPRETATION</div>
+
+  <div class="result-cards">
+    <div class="result-card">
+      <div class="rc-label">MDQ — Mood Disorder Questionnaire</div>
+      <div class="rc-score" id="mdqScore">—</div>
+      <div class="rc-outof">SYMPTOMS ENDORSED / 13</div>
+      <div class="rc-severity" id="mdqSeverity">—</div>
+      <div class="rc-bar-track"><div class="rc-bar-fill" id="mdqBar"></div></div>
+    </div>
+    <div class="result-card">
+      <div class="rc-label">PHQ-9 — Patient Health Questionnaire</div>
+      <div class="rc-score" id="phqScore">—</div>
+      <div class="rc-outof">SCORE / 27</div>
+      <div class="rc-severity" id="phqSeverity">—</div>
+      <div class="rc-bar-track"><div class="rc-bar-fill" id="phqBar"></div></div>
+    </div>
+  </div>
+
+  <div class="combined-interp">
+    <div class="interp-label">CLINICAL INTERPRETATION</div>
+    <div id="interpNotes"></div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer">
+  <div class="footer-copy">
+    <div class="hint">Ready to export?</div>
+    <div class="sub" id="exportSub">Answer all 22 questions to unlock export.</div>
+  </div>
+  <button class="btn-export" id="exportBtn">Export as PDF →</button>
+</footer>
+
+<script>
+  var answers = {};
+  var TOTAL_Q = 22;
+
+  // Date
+  document.getElementById('todayDate').textContent =
+    new Date().toLocaleDateString('en-GB', {day:'2-digit', month:'long', year:'numeric'});
+
+  // Event delegation — MDQ binary + follow-up buttons
+  document.getElementById('mdqWrap').addEventListener('click', function(e) {
+    var btn = e.target.closest('.opt-btn');
+    if (!btn) return;
+    var q = btn.getAttribute('data-q');
+    var val = parseInt(btn.getAttribute('data-val'), 10);
+
+    // Deselect siblings in same q group
+    var siblings = document.querySelectorAll('.opt-btn[data-q="' + q + '"]');
+    for (var i = 0; i < siblings.length; i++) siblings[i].classList.remove('selected');
+    btn.classList.add('selected');
+
+    answers[q] = val;
+
+    // Mark parent answered
+    var parent = btn.closest('[data-q="' + q + '"]');
+    if (parent) parent.classList.add('answered');
+
+    updateProgress();
+    tryShowResults();
+  });
+
+  // Event delegation — PHQ-9 4-option buttons
+  document.getElementById('phqWrap').addEventListener('click', function(e) {
+    var btn = e.target.closest('.option-btn');
+    if (!btn) return;
+    var q = btn.getAttribute('data-q');
+    var score = parseInt(btn.getAttribute('data-score'), 10);
+
+    var siblings = document.querySelectorAll('.option-btn[data-q="' + q + '"]');
+    for (var i = 0; i < siblings.length; i++) siblings[i].classList.remove('selected');
+    btn.classList.add('selected');
+
+    answers[q] = score;
+
+    var parent = btn.closest('[data-q="' + q + '"]');
+    if (parent) parent.classList.add('answered');
+
+    updateProgress();
+    tryShowResults();
+  });
+
+  function updateProgress() {
+    var count = Object.keys(answers).length;
+    document.getElementById('progressCount').textContent = count + ' / ' + TOTAL_Q;
+    document.getElementById('progressFill').style.width = (count / TOTAL_Q * 100) + '%';
+
+    var ready = count >= TOTAL_Q;
+    var btn = document.getElementById('exportBtn');
+    var sub = document.getElementById('exportSub');
+    if (ready) {
+      btn.classList.add('ready');
+      sub.textContent = 'Your completed evaluation will export as a PDF.';
+    } else {
+      btn.classList.remove('ready');
+      sub.textContent = 'Answer all ' + TOTAL_Q + ' questions to unlock export.';
+    }
+  }
+
+  function tryShowResults() {
+    var count = Object.keys(answers).length;
+    if (count < TOTAL_Q) return;
+    computeAndShow();
+  }
+
+  function computeAndShow() {
+    // MDQ score: sum of m1–m13 yes answers
+    var mdqCount = 0;
+    for (var i = 1; i <= 13; i++) {
+      if (answers['m' + i] === 1) mdqCount++;
+    }
+    var samePeriod = answers['m14'] === 1;
+    var interference = answers['m15'] || 0;
+
+    // MDQ positive screen: >= 7 symptoms + same time period + moderate/serious problem
+    var mdqPositive = (mdqCount >= 7) && samePeriod && (interference >= 2);
+    var mdqBorderline = (mdqCount >= 5) && (mdqCount < 7);
+
+    // PHQ-9 score
+    var phqTotal = 0;
+    for (var j = 1; j <= 9; j++) {
+      phqTotal += (answers['p' + j] || 0);
+    }
+    var phqItem9 = answers['p9'] || 0;
+
+    // PHQ severity
+    var phqSev, phqSevText;
+    if (phqTotal <= 4) { phqSev = 'minimal'; phqSevText = 'Minimal Depression'; }
+    else if (phqTotal <= 9) { phqSev = 'mild'; phqSevText = 'Mild Depression'; }
+    else if (phqTotal <= 14) { phqSev = 'moderate'; phqSevText = 'Moderate Depression'; }
+    else if (phqTotal <= 19) { phqSev = 'mod-severe'; phqSevText = 'Moderately Severe Depression'; }
+    else { phqSev = 'severe'; phqSevText = 'Severe Depression'; }
+
+    // MDQ label
+    var mdqSevText;
+    if (mdqPositive) mdqSevText = 'Positive Screen';
+    else if (mdqBorderline) mdqSevText = 'Borderline — Monitor';
+    else mdqSevText = 'Below Threshold';
+
+    // Update score cards
+    document.getElementById('mdqScore').textContent = mdqCount;
+    document.getElementById('mdqSeverity').textContent = mdqSevText;
+    document.getElementById('mdqBar').style.width = (mdqCount / 13 * 100) + '%';
+
+    document.getElementById('phqScore').textContent = phqTotal;
+    document.getElementById('phqSeverity').textContent = phqSevText;
+    document.getElementById('phqBar').style.width = (phqTotal / 27 * 100) + '%';
+
+    // Build interpretation
+    var notes = [];
+
+    // MDQ note
+    if (mdqPositive) {
+      notes.push({
+        tag: 'MDQ — POSITIVE SCREEN',
+        text: 'The client endorsed ' + mdqCount + ' of 13 mood symptoms, reported they occurred during the same time period, and indicated they caused a ' + (interference === 2 ? 'moderate' : 'serious') + ' level of functional impairment. This constitutes a positive screen for a Bipolar Spectrum Disorder. This does not confirm a diagnosis but warrants a structured clinical interview exploring manic, hypomanic, and mixed episodes. Consider referral for psychiatric evaluation.'
+      });
+    } else if (mdqBorderline) {
+      notes.push({
+        tag: 'MDQ — BORDERLINE RESULT',
+        text: 'The client endorsed ' + mdqCount + ' of 13 mood symptoms — below the clinical threshold of 7 but not insignificant. Monitor across sessions for emerging patterns of elevated mood, energy, or impulsivity. Explore whether these experiences have been more pronounced at specific life periods.'
+      });
+    } else {
+      notes.push({
+        tag: 'MDQ — BELOW THRESHOLD',
+        text: 'The client endorsed ' + mdqCount + ' of 13 mood symptoms, which falls below the clinical threshold for a positive bipolar spectrum screen. Bipolar disorder is unlikely to be the primary diagnosis based on this screen alone, though clinical judgement and longitudinal observation remain essential.'
+      });
+    }
+
+    // PHQ note
+    var phqNoteMap = {
+      'minimal': 'PHQ-9 score of ' + phqTotal + ' indicates minimal depressive symptoms. No formal intervention is indicated at this level. Psychoeducation and mood monitoring are appropriate. Reassess at next session.',
+      'mild': 'PHQ-9 score of ' + phqTotal + ' indicates mild depression. Watchful waiting with active support is appropriate. CBT-informed psychoeducation, behavioural activation, and sleep hygiene interventions are recommended as a starting point.',
+      'moderate': 'PHQ-9 score of ' + phqTotal + ' indicates moderate depression with meaningful impact on daily functioning. A structured CBT protocol is recommended. Consider whether symptoms meet diagnostic criteria for a Major Depressive Episode. Psychiatric consultation for medication evaluation may be appropriate.',
+      'mod-severe': 'PHQ-9 score of ' + phqTotal + ' indicates moderately severe depression. Active therapeutic intervention is strongly recommended. A combined approach of psychotherapy and pharmacological treatment should be considered. Assess safety carefully at each session.',
+      'severe': 'PHQ-9 score of ' + phqTotal + ' indicates severe depression requiring urgent clinical attention. Prioritise safety assessment and stabilisation. A psychiatric referral for medication evaluation is strongly recommended. Weekly or bi-weekly sessions are advisable. Document functional impairment carefully.'
+    };
+    notes.push({ tag: 'PHQ-9 — ' + phqSevText.toUpperCase(), text: phqNoteMap[phqSev] });
+
+    // Suicidality flag
+    if (phqItem9 >= 1) {
+      notes.push({
+        tag: 'FLAG — ITEM 9 ELEVATED',
+        text: 'The client endorsed item 9 (thoughts of being better off dead or of hurting themselves) at a frequency of: ' + ['not at all','several days','more than half the days','nearly every day'][phqItem9] + '. A direct safety assessment is required this session. Establish current ideation, intent, plan, and protective factors. Document your risk assessment and safety plan carefully.'
+      });
+    }
+
+    // Combined clinical picture
+    if (mdqPositive && phqSev !== 'minimal') {
+      notes.push({
+        tag: 'COMBINED CLINICAL PICTURE',
+        text: 'The combination of a positive MDQ screen and a PHQ-9 indicating ' + phqSevText.toLowerCase() + ' is clinically significant. This pattern is consistent with a depressive episode occurring within a Bipolar Spectrum presentation. It is important not to treat the depressive symptoms in isolation — antidepressant monotherapy without a mood stabiliser may precipitate a manic or hypomanic episode. A psychiatric evaluation is strongly recommended before any pharmacological intervention is considered.'
+      });
+    } else if ((mdqPositive || mdqBorderline) && phqSev === 'minimal') {
+      notes.push({
+        tag: 'COMBINED CLINICAL PICTURE',
+        text: 'The MDQ raises a flag for possible Bipolar Spectrum pathology while current depressive symptoms appear minimal. This may indicate the client is currently in a euthymic or hypomanic phase rather than a depressive one. Longitudinal mood tracking across sessions is essential. Consider administering the PHQ-9 again during a period of reported low mood to capture the full clinical picture.'
+      });
+    }
+
+    // Render notes
+    var html = '';
+    for (var n = 0; n < notes.length; n++) {
+      html += '<div class="note-block">' +
+        '<div class="note-tag">' + notes[n].tag + '</div>' +
+        '<div class="note-text">' + notes[n].text + '</div>' +
+        '</div>';
+    }
+    document.getElementById('interpNotes').innerHTML = html;
+
+    // Show results
+    document.getElementById('resultsSection').classList.add('visible');
+    setTimeout(function() {
+      document.getElementById('resultsSection').scrollIntoView({behavior:'smooth', block:'start'});
+    }, 200);
+  }
+
+  // Export — addEventListener + setTimeout
+  document.getElementById('exportBtn').addEventListener('click', function() {
+    if (!this.classList.contains('ready')) return;
+
+    var name = document.getElementById('client_name').value || '—';
+    var age = document.getElementById('client_age').value || '—';
+    var session = document.getElementById('session_num').value || '—';
+    var date = new Date().toLocaleDateString('en-GB', {day:'2-digit', month:'long', year:'numeric'});
+
+    document.getElementById('printMeta').innerHTML =
+      'Date: ' + date + '<br>Client: ' + name + '<br>Age: ' + age + '<br>Session: ' + session;
+
+    setTimeout(function() { window.print(); }, 150);
+  });
+</script>
+</body>
+</html>
